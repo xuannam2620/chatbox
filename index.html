@@ -47,19 +47,22 @@
                     if(e.keyCode==13){
                         var name    =   $('#name').val();
                         var mess    =   $('#message').val();
+                        var date    =   new Date();
+                        var tmStr   =   date.getHours()+':'+date.getMinutes();
                         name= name==''?'guest':name;
-                        mReferData.push({name: name, text: mess});
+                        mReferData.push({name: name, text: mess, time: tmStr});
                         $('#message').val('');
                     }
                 });
                 mReferData.on('child_added', function(snapshot){
                 var data= snapshot.val();
-                displayMessage(data.name, data.text);
+                displayMessage(data.name, data.text, data.time);
                 });
-                function displayMessage(name, text){
+                function displayMessage(name, text, time){
                     var textWithEmoticons = $.emoticons.replace(text);
                     var element ='<blockquote>';
-                    element +='<span><kbd>'+name+'</kbd></span>';
+                    time = time==undefined?'':'('+time+')';
+                    element +='<span><kbd>'+name+time+'</kbd></span>';
                     element += '<span class="text-primary padding-l-10">'+textWithEmoticons+'</span>';
                     element += '</bloclqoute>'
                     $('#old_messages').append(element);
@@ -67,19 +70,7 @@
                     $('#message').focus();
                 }
             });
-            mReferData.on('child_added', function(snapshot){
-               var data= snapshot.val();
-               displayMessage(data.name, data.text);
-            });
-            function displayMessage(name, text){
-                var element ='<blockquote>';
-                element +='<span><kbd>'+name+'</kbd></span>';
-                element += '<span class="text-primary padding-l-10">'+text+'</span>';
-                element += '</bloclqoute>'
-                $('#old_messages').append(element);
-                $(".old-messages").animate({ scrollTop: $('.old-messages').prop("scrollHeight")}, 100);
-                $('#message').focus();
-            }
+            
         </script>
     </body>
 </html>
