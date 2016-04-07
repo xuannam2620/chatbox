@@ -67,7 +67,23 @@
                     $('#message').focus();
                 }
             });
+<<<<<<< HEAD
             
+=======
+            mReferData.on('child_added', function(snapshot){
+               var data= snapshot.val();
+               displayMessage(data.name, data.text);
+            });
+            function displayMessage(name, text){
+                var element ='<blockquote>';
+                element +='<span><kbd>'+name+'</kbd></span>';
+                element += '<span class="text-primary padding-l-10">'+text+'</span>';
+                element += '</bloclqoute>'
+                $('#old_messages').append(element);
+                $(".old-messages").animate({ scrollTop: $('.old-messages').prop("scrollHeight")}, 100);
+                $('#message').focus();
+            }
+>>>>>>> d6322b281b0acfb74baee3ed5b876ee793235e25
         </script>
     </body>
 </html>
